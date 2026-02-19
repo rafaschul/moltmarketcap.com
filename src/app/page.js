@@ -81,6 +81,9 @@ export default function Home() {
           <a href="#about" style={{ ...styles.link, color: c.link }}>About</a>
           <a href="#access" style={{ ...styles.link, color: c.link }}>Access</a>
           <a href="#updates" style={{ ...styles.link, color: c.link }}>Updates</a>
+          <a href="/dashboard" style={{ ...styles.link, color: c.link }}>Dashboard</a>
+          <a href="/dashboard/summaries/progress" style={{ ...styles.link, color: c.link }}>Progress</a>
+          <a href="/dashboard/summaries/evening" style={{ ...styles.link, color: c.link }}>Evening</a>
           <a href="#contact" style={{ ...styles.cta, padding: isMobile ? "7px 12px" : "8px 14px" }}>Contact</a>
         </nav>
       </header>
