@@ -4,28 +4,40 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY || 0);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+
+    onResize();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   const floatingOffset = Math.min(scrollY * 0.08, 26);
 
   return (
-    <main style={styles.page}>
+    <main style={{ ...styles.page, padding: isMobile ? "16px" : "24px" }}>
       <a
         href="#contact"
         style={{
           ...styles.floatingContact,
+          right: isMobile ? "12px" : "20px",
+          bottom: isMobile ? "12px" : "20px",
+          padding: isMobile ? "10px 14px" : "12px 18px",
           transform: `translateY(${floatingOffset}px)`,
         }}
       >
         Contact
       </a>
 
-      <header style={styles.nav}>
+      <header style={{ ...styles.nav, flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "center", gap: isMobile ? "10px" : 0 }}>
         <div style={styles.logoWrap}>
           <div style={styles.logoBadge}>
             <img src="/bcp-logo.jpg" alt="BCP Partners logo" style={styles.logoImage} />
@@ -35,23 +47,23 @@ export default function Home() {
             <div style={styles.logoSub}>On-Chain Venture Access</div>
           </div>
         </div>
-        <nav style={styles.navLinks}>
+        <nav style={{ ...styles.navLinks, flexWrap: "wrap", gap: isMobile ? "10px" : "14px" }}>
           <a href="#about" style={styles.link}>About</a>
           <a href="#access" style={styles.link}>Access</a>
           <a href="#updates" style={styles.link}>Updates</a>
-          <a href="#contact" style={styles.cta}>Contact</a>
+          <a href="#contact" style={{ ...styles.cta, padding: isMobile ? "7px 12px" : "8px 14px" }}>Contact</a>
         </nav>
       </header>
 
       <section style={styles.hero}>
-        <div style={styles.heroVisual}>
+        <div style={{ ...styles.heroVisual, height: isMobile ? 120 : 160 }}>
           <div style={styles.heroBlobA} />
           <div style={styles.heroBlobB} />
           <div style={styles.heroCard}>Institutional • Tokenization • RWA</div>
         </div>
         <p style={styles.kicker}>On-Chain Capital Intelligence</p>
-        <h1 style={styles.headline}>Institutional-grade Web3 access for the next market cycle.</h1>
-        <p style={styles.subhead}>
+        <h1 style={{ ...styles.headline, fontSize: isMobile ? "40px" : "clamp(36px,6vw,64px)" }}>Institutional-grade Web3 access for the next market cycle.</h1>
+        <p style={{ ...styles.subhead, fontSize: isMobile ? "16px" : "18px" }}>
           Inspired by modern venture and tokenization platforms: clear structure, trust-first design, and a practical bridge between traditional finance and digital assets.
         </p>
         <div style={styles.heroActions}>
@@ -85,7 +97,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" style={styles.split}>
+      <section id="about" style={{ ...styles.split, gridTemplateColumns: isMobile ? "1fr" : "1.5fr 1fr" }}>
         <div>
           <h2 style={styles.sectionTitle}>Bridge builders between finance and on-chain markets</h2>
           <p style={styles.paragraph}>
@@ -122,13 +134,13 @@ export default function Home() {
       <section style={styles.newsletter}>
         <h3 style={{ margin: 0 }}>Get ecosystem updates</h3>
         <p style={{ margin: "8px 0 14px", color: "#475569" }}>Market, regulation, and product updates in one concise feed.</p>
-        <div style={styles.subscribeRow}>
+        <div style={{ ...styles.subscribeRow, flexDirection: isMobile ? "column" : "row" }}>
           <input placeholder="Email address" style={styles.input} />
-          <button style={styles.primaryBtn}>Subscribe</button>
+          <button style={{ ...styles.primaryBtn, width: isMobile ? "100%" : "auto" }}>Subscribe</button>
         </div>
       </section>
 
-      <footer id="contact" style={styles.footer}>
+      <footer id="contact" style={{ ...styles.footer, flexDirection: isMobile ? "column" : "row", gap: isMobile ? "8px" : 0, alignItems: isMobile ? "flex-start" : "center" }}>
         <div>MoltMarketCap • Berlin</div>
         <a href="https://github.com/rafaschul/moltmarketcap.com" style={styles.link}>GitHub</a>
       </footer>
