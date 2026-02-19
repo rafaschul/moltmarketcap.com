@@ -19,7 +19,7 @@ export default function Home() {
     };
   }, []);
 
-  const floatingOffset = Math.min(scrollY * 0.08, 26);
+  const floatingOffset = Math.min(scrollY * 0.05, 14);
   const dark = theme === "dark";
 
   const c = dark
@@ -57,9 +57,9 @@ export default function Home() {
         href="#contact"
         style={{
           ...styles.floatingContact,
-          right: isMobile ? "12px" : "20px",
-          bottom: isMobile ? "12px" : "20px",
-          padding: isMobile ? "10px 14px" : "12px 18px",
+          right: isMobile ? "16px" : "24px",
+          bottom: isMobile ? "calc(env(safe-area-inset-bottom, 0px) + 24px)" : "26px",
+          padding: isMobile ? "11px 16px" : "12px 18px",
           transform: `translateY(${floatingOffset}px)`,
           color: c.text,
         }}
@@ -69,7 +69,7 @@ export default function Home() {
 
       <header style={{ ...styles.nav, flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "center", gap: isMobile ? "10px" : 0 }}>
         <div style={styles.logoWrap}>
-          <div style={{ ...styles.logoBadge, borderColor: c.border, background: dark ? "#0f172a" : "rgba(255,255,255,0.8)" }}>
+          <div style={{ ...styles.logoBadge, borderColor: c.border, background: dark ? "#0f172a" : "rgba(255,255,255,0.9)", width: isMobile ? 108 : 128, height: isMobile ? 66 : 78 }}>
             <img src="/bcp-logo.jpg" alt="BCP Partners logo" style={styles.logoImage} />
           </div>
           <div>
@@ -185,7 +185,7 @@ const styles = {
   nav: { display: "flex", justifyContent: "space-between", padding: "8px 0 20px" },
   logoWrap: { display: "flex", alignItems: "center", gap: "10px" },
   logoBadge: { width: 70, height: 52, borderRadius: 12, overflow: "hidden", border: "1px solid", boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)", display: "grid", placeItems: "center" },
-  logoImage: { width: "100%", height: "100%", objectFit: "cover" },
+  logoImage: { width: "100%", height: "100%", objectFit: "contain", padding: "6px" },
   logo: { fontWeight: 900, fontSize: "22px", letterSpacing: "0.3px" },
   logoSub: { fontSize: 12 },
   navLinks: { display: "flex", alignItems: "center" },
