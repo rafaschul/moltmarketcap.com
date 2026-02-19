@@ -1,6 +1,30 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function Home() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY || 0);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const floatingOffset = Math.min(scrollY * 0.08, 26);
+
   return (
     <main style={styles.page}>
+      <a
+        href="#contact"
+        style={{
+          ...styles.floatingContact,
+          transform: `translateY(${floatingOffset}px)`,
+        }}
+      >
+        Contact
+      </a>
+
       <header style={styles.nav}>
         <div style={styles.logoWrap}>
           <div style={styles.logoMark}>M</div>
@@ -132,6 +156,23 @@ function Metric({ label, value }) {
 
 const styles = {
   page: { minHeight: "100vh", background: "linear-gradient(180deg,#f8fbff 0%,#ffffff 60%)", color: "#0f172a", fontFamily: "Inter, system-ui, sans-serif", padding: "24px", maxWidth: "1150px", margin: "0 auto" },
+  floatingContact: {
+    position: "fixed",
+    right: "20px",
+    bottom: "20px",
+    zIndex: 50,
+    textDecoration: "none",
+    color: "#0f172a",
+    fontWeight: 700,
+    padding: "12px 18px",
+    borderRadius: "999px",
+    border: "1px solid rgba(255,255,255,0.55)",
+    background: "linear-gradient(135deg, rgba(255,255,255,0.55), rgba(255,255,255,0.28))",
+    boxShadow: "0 8px 32px rgba(31,38,135,0.18)",
+    backdropFilter: "blur(14px) saturate(140%)",
+    WebkitBackdropFilter: "blur(14px) saturate(140%)",
+    transition: "transform 140ms ease-out",
+  },
   nav: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0 20px" },
   logoWrap: { display: "flex", alignItems: "center", gap: "10px" },
   logoMark: { width: 34, height: 34, borderRadius: 10, display: "grid", placeItems: "center", background: "linear-gradient(135deg,#16a34a,#22c55e)", color: "#fff", fontWeight: 900 },
